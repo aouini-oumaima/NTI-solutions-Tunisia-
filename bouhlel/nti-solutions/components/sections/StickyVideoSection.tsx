@@ -1,4 +1,5 @@
 import { ShieldCheck, Zap, Globe, Award } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 
 const points = [
   {
@@ -30,7 +31,7 @@ export function StickyVideoSection() {
         {/* Left — image */}
         <div className="relative hidden lg:block h-[580px] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Img
             src="/images/controle-dacces-1.jpg"
             alt="Technicien NTI Solutions en intervention"
             className="w-full h-full object-cover"

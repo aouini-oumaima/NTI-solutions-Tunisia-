@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Flame, Camera } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 
 const words = ["Nous", "sécurisons", "la", "sûreté."];
 
@@ -200,8 +201,7 @@ export function HeroSection() {
               transition={{ duration: 1.1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative z-10"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Img
                 src="/images/camera-ptz-hero.png"
                 alt="Caméra PTZ haute résolution — NTI Solutions"
                 style={{

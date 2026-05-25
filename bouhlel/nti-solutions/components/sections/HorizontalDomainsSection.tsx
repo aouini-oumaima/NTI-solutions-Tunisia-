@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import { Img } from "@/components/ui/Img";
 
 const domains = [
   {
@@ -124,7 +125,7 @@ export function HorizontalDomainsSection() {
               {/* Image */}
               <div className="relative h-[280px] md:h-[340px] overflow-hidden mb-5 img-zoom-wrap">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Img
                   src={domain.image}
                   alt={domain.title}
                   className="zoom-target w-full h-full object-cover"
