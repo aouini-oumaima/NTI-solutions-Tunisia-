@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "PowerShell(Copy-Item \"C:\\\\Bureau\\\\bouhlel\\\\asset\\\\Cam�ras_PTZ-removebg-preview.png\" \"C:\\\\Bureau\\\\bouhlel\\\\nti-solutions\\\\public\\\\images\\\\camera-ptz-hero.png\" -Force)",
-      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('@anthropic-ai/sdk:', p.dependencies['@anthropic-ai/sdk'] || 'NOT INSTALLED'\\)\")"
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('@anthropic-ai/sdk:', p.dependencies['@anthropic-ai/sdk'] || 'NOT INSTALLED'\\)\")",
+      "Read(//c/Bureau/NTI-solutions-Tunisia-/**)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"c:\\\\Bureau\\\\NTI-solutions-Tunisia-\\\\bouhlel\\\\.github\\\\workflows\")"
     ]
   }
 }
