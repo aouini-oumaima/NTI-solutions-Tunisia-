@@ -35,7 +35,8 @@ jobs:
       - name: Build Next.js static site
         working-directory: bouhlel/nti-solutions
         run: npm run build
-        # GITHUB_ACTIONS=true is set automatically by the runner
+        env:
+          NEXT_PUBLIC_BASE_PATH: /NTI-solutions-Tunisia-
 
       - name: Add .nojekyll
         run: touch bouhlel/nti-solutions/out/.nojekyll
