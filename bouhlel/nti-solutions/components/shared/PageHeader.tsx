@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { PDFDownloadButton } from "./PDFDownloadButton";
 import type { ArticlePDFData } from "@/components/pdf/NTIArticlePDF";
+import { Img } from "@/components/ui/Img";
 
 interface Breadcrumb {
   label: string;
@@ -49,8 +50,7 @@ export function PageHeader({
           className="absolute inset-y-0 right-0 hidden lg:block"
           style={{ width: "42%", clipPath: "polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} alt="" aria-hidden className="w-full h-full object-cover" />
+          <Img src={image} alt="" aria-hidden className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0C1F3D] via-[#0C1F3D]/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0C1F3D]/70 via-transparent to-transparent" />
         </div>

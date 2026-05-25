@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { ArrowRight, BarChart3, Car, RotateCw } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Contrôle d'accès",
@@ -53,8 +54,7 @@ export default function ControleAccesPage() {
               </div>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/controle-dacces-1.jpg" alt="Contrôle d'accès NTI Solutions" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/controle-dacces-1.jpg" alt="Contrôle d'accès NTI Solutions" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
             </div>
           </div>
 
@@ -90,8 +90,7 @@ export default function ControleAccesPage() {
             ].map((sol) => (
               <Link key={sol.title} href={sol.href} className="group border border-[#DDE3EC] hover:border-[#D4820A] transition-colors duration-300 card-lift">
                 <div className="h-52 overflow-hidden img-zoom-wrap">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={sol.image} alt={sol.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
+                  <Img src={sol.image} alt={sol.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">
@@ -128,8 +127,7 @@ export default function ControleAccesPage() {
               </p>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/systeme-de-comtrole-de-ronde-1.jpg" alt="Système de contrôle de ronde" className="w-full h-[280px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/systeme-de-comtrole-de-ronde-1.jpg" alt="Système de contrôle de ronde" className="w-full h-[280px] object-cover"  loading="lazy" decoding="async"/>
             </div>
           </div>
         </div>
@@ -139,3 +137,4 @@ export default function ControleAccesPage() {
     </>
   );
 }
+

@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { Droplets, Flame, Wind, CheckCircle } from "lucide-react";
 import { pdfLutteIncendie } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Lutte contre les incendies",
@@ -74,8 +75,7 @@ export default function LutteIncendiePage() {
           {/* RIA */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center mb-16 border border-[#DDE3EC]">
             <div className="overflow-hidden img-zoom-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/lutte.png" alt="Réseau Incendie Armé" className="zoom-target w-full h-[380px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/lutte.png" alt="Réseau Incendie Armé" className="zoom-target w-full h-[380px] object-cover"  loading="lazy" decoding="async"/>
             </div>
             <div className="p-8">
               <span className="label-tag text-[#D4820A] block mb-3">Solution principale</span>
@@ -159,3 +159,4 @@ export default function LutteIncendiePage() {
     </>
   );
 }
+

@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/products";
+import { Img } from "@/components/ui/Img";
 
 interface ProductGalleryProps {
   product: Product;
@@ -32,7 +33,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             style={{ gridRow: "span 2" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Img
               src={heroImg}
               alt={`${product.name} — vue principale`}
               className="zoom-target w-full h-full object-cover"
@@ -59,7 +60,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               className="relative overflow-hidden group cursor-zoom-in img-zoom-wrap border border-[#DDE3EC]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Img
                 src={src}
                 alt={`${product.name} — image ${i + 2}`}
                 className="zoom-target w-full h-full object-cover"

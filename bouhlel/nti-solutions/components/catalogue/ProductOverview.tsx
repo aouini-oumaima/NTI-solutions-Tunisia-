@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/products";
+import { Img } from "@/components/ui/Img";
 
 interface ProductOverviewProps {
   product: Product;
@@ -60,8 +61,7 @@ export function ProductOverview({ product }: ProductOverviewProps) {
                   : undefined
               }
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Img
                 src={product.nobgImage ?? product.heroImage}
                 alt={`${product.name} — Vue d'ensemble`}
                 loading="lazy"

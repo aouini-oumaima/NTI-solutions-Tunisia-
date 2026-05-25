@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { pdfComposants } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Composants détection incendie",
@@ -83,8 +84,7 @@ export default function ComposantsPage() {
               <div key={comp.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-14 items-start ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
                 <div className={i % 2 === 1 ? "lg:order-2" : ""}>
                   <div className="relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={comp.image} alt={comp.name} className="w-full h-72 object-cover"  loading="lazy" decoding="async"/>
+                    <Img src={comp.image} alt={comp.name} className="w-full h-72 object-cover"  loading="lazy" decoding="async"/>
                     <div className="absolute top-5 left-5">
                       <span className="label-tag bg-[#D4820A] text-white px-3 py-1.5">{comp.id}</span>
                     </div>
@@ -146,3 +146,4 @@ export default function ComposantsPage() {
     </>
   );
 }
+

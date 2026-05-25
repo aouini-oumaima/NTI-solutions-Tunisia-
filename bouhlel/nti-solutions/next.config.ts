@@ -4,9 +4,15 @@ import type { NextConfig } from "next";
 // Locally (dev/build without CI) the basePath is empty so the site works at localhost:3000.
 const isGitHubActions = process.env.GITHUB_ACTIONS === "true";
 
+const BASE_PATH = isGitHubActions ? "/NTI-solutions-Tunisia-" : "";
+
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isGitHubActions ? "/NTI-solutions-Tunisia-" : "",
+  basePath: BASE_PATH,
+  // Expose basePath to all components so raw <img> tags can also prepend it
+  env: {
+    NEXT_PUBLIC_BASE_PATH: BASE_PATH,
+  },
   images: {
     unoptimized: true, // required for static export — next/image optimization needs a server
     remotePatterns: [

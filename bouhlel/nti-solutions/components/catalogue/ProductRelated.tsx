@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getRelatedProducts } from "@/lib/products";
 import type { Product } from "@/lib/products";
+import { Img } from "@/components/ui/Img";
 
 interface ProductRelatedProps {
   product: Product;
@@ -65,7 +66,7 @@ export function ProductRelated({ product }: ProductRelatedProps) {
                 }
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Img
                   src={rel.nobgImage ?? rel.heroImage}
                   alt={rel.name}
                   loading="lazy"

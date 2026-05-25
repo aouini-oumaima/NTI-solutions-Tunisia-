@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, Phone } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 
 export function CTASection() {
   return (
     <section className="relative min-h-[600px] flex items-center justify-center bg-[#0C1F3D] overflow-hidden">
       {/* Static background image */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Img
         src="/images/lutte.png"
         alt=""
         aria-hidden="true"

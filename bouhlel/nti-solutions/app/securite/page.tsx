@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { Flame, Wind, Droplets, ArrowRight } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Système de Sécurité Incendie",
@@ -97,8 +98,7 @@ export default function SecuritePage() {
             {solutions.map((sol) => (
               <Link key={sol.title} href={sol.href} className="group border border-[#DDE3EC] hover:border-[#D4820A] transition-all duration-300 card-lift">
                 <div className="h-52 overflow-hidden img-zoom-wrap relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={sol.image} alt={sol.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
+                  <Img src={sol.image} alt={sol.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <div className="absolute bottom-4 left-4 w-10 h-10 bg-[#D4820A] flex items-center justify-center">
                     <sol.icon size={20} className="text-white" />
@@ -130,3 +130,4 @@ export default function SecuritePage() {
     </>
   );
 }
+

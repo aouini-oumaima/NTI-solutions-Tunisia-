@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { Wind, ArrowUp, Waves, CheckCircle } from "lucide-react";
 import { pdfDesenfumage } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Désenfumage et compartimentage",
@@ -90,8 +91,7 @@ export default function DesenfumagePage() {
               </div>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Img
                 src="/images/Desenfumage-et-compartimentage-1.png"
                 alt="Schéma désenfumage"
                 className="w-full h-[420px] object-cover"
@@ -110,8 +110,7 @@ export default function DesenfumagePage() {
             {systems.map((sys, i) => (
               <div key={sys.title} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center border border-[#DDE3EC] overflow-hidden`}>
                 <div className={`h-64 lg:h-full ${i % 2 === 1 ? "lg:order-2" : ""} overflow-hidden img-zoom-wrap`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={sys.image} alt={sys.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
+                  <Img src={sys.image} alt={sys.title} className="zoom-target w-full h-full object-cover"  loading="lazy" decoding="async"/>
                 </div>
                 <div className={`p-8 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                   <div className="flex items-center gap-3 mb-4">
@@ -155,3 +154,4 @@ export default function DesenfumagePage() {
     </>
   );
 }
+

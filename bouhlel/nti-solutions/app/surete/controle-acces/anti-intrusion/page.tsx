@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { Radio, Bell, Smartphone, Shield } from "lucide-react";
 import { pdfAntiIntrusion } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Système anti-intrusion",
@@ -84,8 +85,7 @@ export default function AntiIntrusionPage() {
               </p>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/PORTES.jpg" alt="Système anti-intrusion" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/PORTES.jpg" alt="Système anti-intrusion" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
             </div>
           </div>
 
@@ -158,3 +158,4 @@ export default function AntiIntrusionPage() {
     </>
   );
 }
+

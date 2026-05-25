@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 import type { Product } from "@/lib/products";
 
 interface ProductHeroProps {
@@ -223,8 +224,7 @@ export function ProductHero({ product }: ProductHeroProps) {
               transition={{ duration: 1.1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative z-10"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Img
                 src={product.nobgImage ?? product.heroImage}
                 alt={product.name}
                 fetchPriority="high"

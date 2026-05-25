@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { CheckCircle } from "lucide-react";
 import { pdfConventionnel } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Détection incendie conventionnelle",
@@ -78,8 +79,7 @@ export default function ConventionnelPage() {
               </ul>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/Conventionnel.jpg.png" alt="Centrale conventionnelle" className="w-full h-[420px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/Conventionnel.jpg.png" alt="Centrale conventionnelle" className="w-full h-[420px] object-cover"  loading="lazy" decoding="async"/>
             </div>
           </div>
 
@@ -149,3 +149,4 @@ export default function ConventionnelPage() {
     </>
   );
 }
+

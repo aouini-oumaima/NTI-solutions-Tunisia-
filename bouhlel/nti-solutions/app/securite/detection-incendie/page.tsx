@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { CTASection } from "@/components/sections/CTASection";
 import { ArrowRight, CheckCircle, AlertTriangle, Bell, Zap } from "lucide-react";
 import { pdfDetectionIncendie } from "@/lib/pdf-data";
+import { Img } from "@/components/ui/Img";
 
 export const metadata: Metadata = {
   title: "Détection incendie",
@@ -60,8 +61,7 @@ export default function DetectionIncendiePage() {
               </div>
             </div>
             <div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/Le-systeme-de-securite-incendie.jpg.png" alt="Système de sécurité incendie" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
+              <Img src="/images/Le-systeme-de-securite-incendie.jpg.png" alt="Système de sécurité incendie" className="w-full h-[400px] object-cover"  loading="lazy" decoding="async"/>
             </div>
           </div>
 
@@ -139,3 +139,4 @@ export default function DetectionIncendiePage() {
     </>
   );
 }
+
