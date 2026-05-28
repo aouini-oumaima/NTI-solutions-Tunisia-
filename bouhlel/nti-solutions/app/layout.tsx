@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { LangProvider } from "@/lib/lang-context";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { FloatingContact } from "@/components/ui/FloatingContact";
@@ -70,15 +71,17 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="bg-white text-[#0C1F3D] antialiased overflow-x-hidden">
-        <SmoothScrollProvider>
-          <CustomCursor />
-          <FloatingContact />
-          <ChatWidget />
-          <BackToTop />
-          <Header />
-          <main id="main-content">{children}</main>
-          <Footer />
-        </SmoothScrollProvider>
+        <LangProvider>
+          <SmoothScrollProvider>
+            <CustomCursor />
+            <FloatingContact />
+            <ChatWidget />
+            <BackToTop />
+            <Header />
+            <main id="main-content">{children}</main>
+            <Footer />
+          </SmoothScrollProvider>
+        </LangProvider>
       </body>
     </html>
   );

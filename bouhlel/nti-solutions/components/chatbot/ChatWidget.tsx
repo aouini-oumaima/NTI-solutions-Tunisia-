@@ -15,8 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { ChatMessage } from "@/lib/types";
-
-type Lang = "fr" | "en" | "ar";
+import { useLang } from "@/lib/lang-context";
+import type { Lang } from "@/lib/types";
 
 const LANG_LABELS: Record<Lang, string> = { fr: "FR", en: "EN", ar: "ع" };
 
@@ -47,6 +47,24 @@ const QUICK_PROMPTS: Record<Lang, { label: string; text: string }[]> = {
   ],
 };
 
+const CONTACT_Q: Record<Lang, string> = {
+  fr: "Comment vous contacter ?",
+  en: "How can I contact you?",
+  ar: "كيف يمكنني التواصل معكم؟",
+};
+
+const STATUS_LABEL: Record<Lang, string> = {
+  fr: "En ligne · IA Claude",
+  en: "Online · Claude AI",
+  ar: "متصل · الذكاء الاصطناعي",
+};
+
+const FOOTER_LABEL: Record<Lang, string> = {
+  fr: "Réponses basées sur le contenu NTI Solutions · IA Claude",
+  en: "Responses based on NTI Solutions content · Claude AI",
+  ar: "الإجابات مستندة إلى محتوى NTI Solutions · الذكاء الاصطناعي",
+};
+
 function renderMarkdown(text: string) {
   return text
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -74,7 +92,7 @@ function TypingDots() {
   );
 }
 
-function MessageBubble({ msg, isLast }: { msg: ChatMessage & { streaming?: boolean }; isLast: boolean }) {
+function MessageBubble({ msg, isLast, lang }: { msg: ChatMessage & { streaming?: boolean }; isLast: boolean; lang: Lang }) {
   const isUser = msg.role === "user";
   return (
     <motion.div
@@ -89,6 +107,7 @@ function MessageBubble({ msg, isLast }: { msg: ChatMessage & { streaming?: boole
         </div>
       )}
       <div
+        dir={lang === "ar" ? "rtl" : "ltr"}
         className={`max-w-[82%] text-sm leading-relaxed px-4 py-2.5 ${
           isUser
             ? "bg-[#D4820A] text-white rounded-2xl rounded-tr-sm"
@@ -98,9 +117,7 @@ function MessageBubble({ msg, isLast }: { msg: ChatMessage & { streaming?: boole
         {isUser ? (
           <span>{msg.content}</span>
         ) : (
-          <span
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
-          />
+          <span dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }} />
         )}
         {msg.streaming && isLast && (
           <span className="inline-block w-0.5 h-3.5 bg-[#D4820A] ml-0.5 animate-pulse align-middle" />
@@ -111,8 +128,8 @@ function MessageBubble({ msg, isLast }: { msg: ChatMessage & { streaming?: boole
 }
 
 export function ChatWidget() {
+  const { lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<Lang>("fr");
   const [messages, setMessages] = useState<(ChatMessage & { streaming?: boolean })[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -122,6 +139,7 @@ export function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const prevLangRef = useRef<Lang>(lang);
 
   // Init greeting on first open
   useEffect(() => {
@@ -129,6 +147,17 @@ export function ChatWidget() {
       setMessages([{ role: "assistant", content: GREETINGS[lang] }]);
     }
   }, [open, lang, messages.length]);
+
+  // Reset conversation when global lang changes (e.g. from Header switcher)
+  useEffect(() => {
+    if (prevLangRef.current !== lang) {
+      prevLangRef.current = lang;
+      abortRef.current?.abort();
+      setMessages(open ? [{ role: "assistant", content: GREETINGS[lang] }] : []);
+      setInput("");
+      setError(null);
+    }
+  }, [lang, open]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -167,7 +196,6 @@ export function ChatWidget() {
       setMessages(nextMessages);
       setLoading(true);
 
-      // Placeholder streaming message
       const assistantIdx = nextMessages.length;
       setMessages((prev) => [...prev, { role: "assistant", content: "", streaming: true }]);
 
@@ -175,7 +203,6 @@ export function ChatWidget() {
       abortRef.current = ctrl;
 
       try {
-        // Static build: use the client-side fallback engine directly (no server needed).
         const { streamFallbackResponse } = await import("@/lib/chatbot-fallback");
         let accumulated = "";
 
@@ -219,9 +246,8 @@ export function ChatWidget() {
   };
 
   const switchLang = (l: Lang) => {
-    setLang(l);
+    setLang(l); // updates global context + localStorage
     setShowLangMenu(false);
-    resetConversation();
   };
 
   return (
@@ -291,7 +317,7 @@ export function ChatWidget() {
                     </p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-                      <span className="text-white/45 text-[10px] tracking-wide">En ligne · IA Claude</span>
+                      <span className="text-white/45 text-[10px] tracking-wide">{STATUS_LABEL[lang]}</span>
                     </div>
                   </div>
                 </div>
@@ -353,10 +379,10 @@ export function ChatWidget() {
               {/* ── Messages ── */}
               <div className="flex-1 overflow-y-auto px-4 pt-4 pb-2 bg-[#F8F9FB] min-h-0">
                 {messages.map((msg, i) => (
-                  <MessageBubble key={i} msg={msg} isLast={i === messages.length - 1} />
+                  <MessageBubble key={i} msg={msg} isLast={i === messages.length - 1} lang={lang} />
                 ))}
 
-                {/* Loading dots (before streaming starts) */}
+                {/* Loading dots */}
                 {loading && messages[messages.length - 1]?.content === "" && (
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
@@ -424,7 +450,7 @@ export function ChatWidget() {
                   className="flex items-center gap-1.5 text-[11px] text-[#526272] hover:text-[#D4820A] transition-colors px-2 py-1.5 hover:bg-[#F8F9FB]"
                 >
                   <FileText size={11} />
-                  Devis
+                  {lang === "fr" ? "Devis" : lang === "en" ? "Quote" : "عرض سعر"}
                 </Link>
                 <div className="w-px h-4 bg-[#E8EDF3]" />
                 <Link
@@ -433,11 +459,11 @@ export function ChatWidget() {
                   className="flex items-center gap-1.5 text-[11px] text-[#526272] hover:text-[#D4820A] transition-colors px-2 py-1.5 hover:bg-[#F8F9FB]"
                 >
                   <ExternalLink size={11} />
-                  Catalogue
+                  {lang === "fr" ? "Catalogue" : lang === "en" ? "Catalogue" : "كتالوج"}
                 </Link>
                 <div className="w-px h-4 bg-[#E8EDF3]" />
                 <button
-                  onClick={() => sendMessage(lang === "fr" ? "Comment vous contacter ?" : lang === "en" ? "How can I contact you?" : "كيف يمكنني التواصل معكم؟")}
+                  onClick={() => sendMessage(CONTACT_Q[lang])}
                   className="flex items-center gap-1.5 text-[11px] text-[#526272] hover:text-[#D4820A] transition-colors px-2 py-1.5 hover:bg-[#F8F9FB]"
                 >
                   <MessageSquare size={11} />
@@ -490,7 +516,7 @@ export function ChatWidget() {
                   </button>
                 </div>
                 <p className="text-[9px] text-[#9AAAB8] mt-1.5 text-center">
-                  Réponses basées sur le contenu NTI Solutions · IA Claude
+                  {FOOTER_LABEL[lang]}
                 </p>
               </div>
             </div>

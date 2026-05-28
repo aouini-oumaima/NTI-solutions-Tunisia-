@@ -1,43 +1,111 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Img } from "@/components/ui/Img";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Img } from "@/components/ui/Img";
+import { useLang } from "@/lib/lang-context";
+import type { Lang } from "@/lib/types";
 
-const navigation = [
-  {
-    label: "Sûreté",
-    href: "/surete",
-    children: [
-      { label: "Vidéosurveillance", href: "/surete/videosurveillance" },
-      { label: "Contrôle d'accès", href: "/surete/controle-acces" },
-      { label: "Tourniquets", href: "/surete/controle-acces/tourniquets" },
-      { label: "Anti-intrusion", href: "/surete/controle-acces/anti-intrusion" },
-    ],
+const LANG_LABELS: Record<Lang, string> = { fr: "FR", en: "EN", ar: "ع" };
+
+const T = {
+  fr: {
+    surete: "Sûreté",
+    securite: "Sécurité",
+    catalogue: "Catalogue",
+    about: "À propos",
+    recrutement: "Recrutement",
+    contact: "Contact",
+    videosurveillance: "Vidéosurveillance",
+    controleAcces: "Contrôle d'accès",
+    tourniquets: "Tourniquets",
+    antiIntrusion: "Anti-intrusion",
+    detectionIncendie: "Détection incendie",
+    conventionnel: "Système conventionnel",
+    adressable: "Système adressable",
+    desenfumage: "Désenfumage",
+    lutteIncendie: "Lutte incendie",
+    cta: "Demander un devis",
   },
-  {
-    label: "Sécurité",
-    href: "/securite",
-    children: [
-      { label: "Détection incendie", href: "/securite/detection-incendie" },
-      { label: "Système conventionnel", href: "/securite/detection-incendie/conventionnel" },
-      { label: "Système adressable", href: "/securite/detection-incendie/adressable" },
-      { label: "Désenfumage", href: "/securite/desenfumage" },
-      { label: "Lutte incendie", href: "/securite/lutte-incendie" },
-    ],
+  en: {
+    surete: "Safety",
+    securite: "Security",
+    catalogue: "Catalogue",
+    about: "About",
+    recrutement: "Careers",
+    contact: "Contact",
+    videosurveillance: "Video Surveillance",
+    controleAcces: "Access Control",
+    tourniquets: "Turnstiles",
+    antiIntrusion: "Anti-Intrusion",
+    detectionIncendie: "Fire Detection",
+    conventionnel: "Conventional System",
+    adressable: "Addressable System",
+    desenfumage: "Smoke Extraction",
+    lutteIncendie: "Fire Fighting",
+    cta: "Request a quote",
   },
-  { label: "Catalogue", href: "/produits" },
-  { label: "À propos", href: "/a-propos" },
-  { label: "Recrutement", href: "/recrutement" },
-  { label: "Contact", href: "/contact" },
-];
+  ar: {
+    surete: "الأمن",
+    securite: "السلامة",
+    catalogue: "كتالوج",
+    about: "من نحن",
+    recrutement: "وظائف",
+    contact: "اتصل بنا",
+    videosurveillance: "مراقبة بالكاميرا",
+    controleAcces: "التحكم في الدخول",
+    tourniquets: "بوابات دوارة",
+    antiIntrusion: "ضد الاقتحام",
+    detectionIncendie: "كشف الحريق",
+    conventionnel: "نظام تقليدي",
+    adressable: "نظام عنواني",
+    desenfumage: "تصريف الدخان",
+    lutteIncendie: "إطفاء الحريق",
+    cta: "طلب عرض سعر",
+  },
+} as const;
+
+function getNavigation(lang: Lang) {
+  const t = T[lang];
+  return [
+    {
+      label: t.surete,
+      href: "/surete",
+      children: [
+        { label: t.videosurveillance, href: "/surete/videosurveillance" },
+        { label: t.controleAcces, href: "/surete/controle-acces" },
+        { label: t.tourniquets, href: "/surete/controle-acces/tourniquets" },
+        { label: t.antiIntrusion, href: "/surete/controle-acces/anti-intrusion" },
+      ],
+    },
+    {
+      label: t.securite,
+      href: "/securite",
+      children: [
+        { label: t.detectionIncendie, href: "/securite/detection-incendie" },
+        { label: t.conventionnel, href: "/securite/detection-incendie/conventionnel" },
+        { label: t.adressable, href: "/securite/detection-incendie/adressable" },
+        { label: t.desenfumage, href: "/securite/desenfumage" },
+        { label: t.lutteIncendie, href: "/securite/lutte-incendie" },
+      ],
+    },
+    { label: t.catalogue, href: "/produits" },
+    { label: t.about, href: "/a-propos" },
+    { label: t.recrutement, href: "/recrutement" },
+    { label: t.contact, href: "/contact" },
+  ];
+}
 
 export function Header() {
+  const { lang, setLang } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const navigation = getNavigation(lang);
+  const t = T[lang];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -133,6 +201,28 @@ export function Header() {
 
           {/* Right actions */}
           <div className="hidden lg:flex items-center gap-4">
+            {/* Lang switcher */}
+            <div className="flex items-center border border-white/20 overflow-hidden">
+              {(["fr", "en", "ar"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`px-2.5 py-1 text-xs font-medium transition-all duration-200 ${
+                    lang === l
+                      ? scrolled
+                        ? "bg-[#0C1F3D] text-white"
+                        : "bg-white/20 text-white"
+                      : scrolled
+                      ? "text-[#526272] hover:text-[#0C1F3D] hover:bg-[#F4F6F9]"
+                      : "text-white/50 hover:text-white hover:bg-white/10"
+                  }`}
+                  aria-label={l === "fr" ? "Français" : l === "en" ? "English" : "العربية"}
+                >
+                  {LANG_LABELS[l]}
+                </button>
+              ))}
+            </div>
+
             <a
               href="https://wa.me/21629600424"
               target="_blank"
@@ -145,7 +235,7 @@ export function Header() {
               +216 29 600 424
             </a>
             <Link href="/contact" className="btn-primary text-sm py-2.5 px-5">
-              Demander un devis
+              {t.cta}
             </Link>
           </div>
 
@@ -172,6 +262,23 @@ export function Header() {
             transition={{ type: "tween", duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="fixed inset-0 z-40 bg-[#0C1F3D] flex flex-col pt-24 pb-8 px-6 overflow-y-auto"
           >
+            {/* Mobile lang switcher */}
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
+              {(["fr", "en", "ar"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => { setLang(l); }}
+                  className={`px-4 py-1.5 text-sm font-medium border transition-colors ${
+                    lang === l
+                      ? "border-[#D4820A] text-[#D4820A]"
+                      : "border-white/20 text-white/40 hover:text-white hover:border-white/40"
+                  }`}
+                >
+                  {l === "fr" ? "Français" : l === "en" ? "English" : "العربية"}
+                </button>
+              ))}
+            </div>
+
             <nav className="flex flex-col gap-1">
               {navigation.map((item, i) => (
                 <motion.div
@@ -216,7 +323,7 @@ export function Header() {
                 onClick={() => setMobileOpen(false)}
                 className="btn-primary justify-center text-center"
               >
-                Demander un devis
+                {t.cta}
               </Link>
             </div>
           </motion.div>
