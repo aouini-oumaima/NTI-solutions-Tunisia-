@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -66,18 +66,15 @@ export function Header() {
         <div className="container-wide flex items-center justify-between gap-6">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 relative z-10">
-            <div className={`transition-all duration-500 ${scrolled ? "h-9" : "h-10"}`}>
-              <Image
-                src="/images/logo nti.png"
-                alt="NTI Solutions"
-                width={140}
-                height={40}
-                className={`h-full w-auto object-contain transition-all duration-500 ${
-                  scrolled ? "brightness-100" : "brightness-0 invert"
-                }`}
-                priority
-              />
-            </div>
+            <Img
+              src="/images/logo nti.png"
+              alt="NTI Solutions"
+              width={140}
+              height={40}
+              className={`block w-auto object-contain transition-all duration-500 ${
+                scrolled ? "h-9 brightness-100" : "h-10 brightness-0 invert"
+              }`}
+            />
           </Link>
 
           {/* Desktop nav */}

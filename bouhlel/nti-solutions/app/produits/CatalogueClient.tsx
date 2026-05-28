@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Img } from "@/components/ui/Img";
 import type { Product } from "@/lib/products";
 
 type FilterSlug = "tous" | "videosurveillance" | "controle-acces" | "securite-incendie";
@@ -91,8 +92,7 @@ export function CatalogueClient({ products }: CatalogueClientProps) {
                 className="relative h-48 overflow-hidden flex items-center justify-center"
                 style={{ background: "#F4F6F9" }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Img
                   src={product.nobgImage ?? product.heroImage}
                   alt={product.name}
                   loading="lazy"

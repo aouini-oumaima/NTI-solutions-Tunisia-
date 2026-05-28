@@ -1,5 +1,5 @@
 ﻿import Link from "next/link";
-import Image from "next/image";
+import { Img } from "@/components/ui/Img";
 import { MapPin, Phone, Mail, Clock, ChevronRight } from "lucide-react";
 
 const services = [
@@ -30,12 +30,12 @@ export function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
-              <Image
+              <Img
                 src="/images/logo nti.png"
                 alt="NTI Solutions"
                 width={130}
                 height={36}
-                className="h-9 w-auto object-contain brightness-0 invert"
+                className="block h-9 w-auto object-contain brightness-0 invert"
               />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed mb-6">
